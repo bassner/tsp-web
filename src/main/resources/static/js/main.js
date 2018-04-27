@@ -6,7 +6,6 @@ let directionsService; //the google directions service object
 let directionsDisplay; //the google directions display object (used to render directions onto the map)
 let smallIncInterval; //the current fake progress interval; used to show small progress increments on unupdated server side operations
 
-//TODO: Dokument: Connection zwischen Clinet und Server + Energyconversion. Programm: Reihenfolge noch mal anzeigen in Sidebar wegen Routenüberlagerung
 
 /**
  * The callback for the Google Maps component that is called as soons as the Maps Script is ready.
