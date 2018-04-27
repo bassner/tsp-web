@@ -9,7 +9,7 @@ $ cd tsp-web
 ```
 2. Run
 ``` 
-$ java -jar target/tsp-web-0.0.1-SNAPSHOT.jar 
+$ java -jar release/tsp-web-0.1.jar 
 ```
 3. Open up your browser and navigate to `http://localhost:8080`
 
