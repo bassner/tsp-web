@@ -1,6 +1,8 @@
 # tsp-web
 A TSP Solver using energy consumption of an electric vehicle as distance values. Capable of solving the TSP for up to 13 locations on a real world street map.
 
+For an insight on internal functionality, please read the PDF-Documentation.
+
 # Set Up
 1. Clone this repository
 ```
