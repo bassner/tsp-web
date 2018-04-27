@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>TSP-Solver</title>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"
+            integrity="sha256-RKNmL9+6j/3jB72OcIg8OQr91Bi4OgFPnKQOFS1O+fo="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css"
+          integrity="sha256-oDCP2dNW17Y1QhBwQ+u2kLaKxoauWvIGks3a4as9QKs="
+          crossorigin="anonymous"/>
+    <link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css"/>
+    <link rel="stylesheet" href="css/arrowbounce.css"/>
+</head>
+<body>
+<div class="ui overlay right inverted sidebar" id="details-sidebar">
+    <h3 class="ui inverted header">Details</h3>
+    <hr>
+    <div id="details-view">
+        <p id="details-view-placeholder">Detaillierte Berechnungsergebnisse werden hier angezeigt, sobald eine
+            Berechnung durchgeführt wurde.</p>
+        <table id="details-view-table">
+            <tr>
+                <td>Berechnungszeit</td>
+                <td id="calc-time"></td>
+            </tr>
+            <tr>
+                <td>Vollständig berechnete Pfade</td>
+                <td id="completely-calculated-paths"></td>
+            </tr>
+            <tr>
+                <td>Unvollständig berechnete Pfade</td>
+                <td id="incompletely-calculated-paths"></td>
+            </tr>
+            <tr>
+                <td>Mögliche Pfade</td>
+                <td id="possible-paths"></td>
+            </tr>
+            <tr>
+                <td>Stromverbrauch (bester Pfad)</td>
+                <td id="best-consumption"></td>
+            </tr>
+            <tr>
+                <td>Distanz des besten Pfades</td>
+                <td id="best-distance"></td>
+            </tr>
+            <tr>
+                <td>Bester Pfad</td>
+                <td id="best-path"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="pusher">
+    <div id="hFlex">
+        <div class="ui left sticky vertical inverted menu" id="sidebar">
+            <div id="box">
+                <div class="item" id="sidebar-header">
+                    <div class="ui grid">
+                        <div class="ten wide column">
+                            <h1 class="ui inverted header">
+                                <i class="truck icon" id="truck-icon"></i>
+                                TSP Solver
+                            </h1>
+                        </div>
+                        <div class="six wide column">
+                            <div class="ui fluid button" id="detailsButton">Details anzeigen</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="sidebar-content">
+                    <div class="item">
+                        <h3 class="ui inverted header">Zielorte</h3>
+                        <p>Bitte geben Sie hier die Adressen Ihrer Zielorte ein. Wechseln Sie in das nächste Feld oder
+                            drücken Sie die Enter-Taste, um Ihre Eingabe zu übernehmen.</p>
+                        <form class="ui inverted form">
+                            <div class="field">
+                                <div class="ui middle aligned grid">
+                                    <div class="two wide column cla">
+                                        1
+                                    </div>
+                                    <div class="fourteen wide column">
+                                        <input class="cityField" id="city-0" placeholder="Addresse 1" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui middle aligned grid">
+                                    <div class="two wide column cla">
+                                        2
+                                    </div>
+                                    <div class="fourteen wide column">
+                                        <input class="cityField" id="city-1" placeholder="Addresse 2" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui middle aligned grid">
+                                    <div class="two wide column cla">
+                                        3
+                                    </div>
+                                    <div class="fourteen wide column">
+                                        <input class="cityField" id="city-2" placeholder="Addresse 3" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui middle aligned grid">
+                                    <div class="two wide column cla">
+                                        4
+                                    </div>
+                                    <div class="fourteen wide column">
+                                        <input class="cityField" id="city-3" placeholder="Addresse 4" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui middle aligned grid">
+                                    <div class="two wide column cla">
+                                        5
+                                    </div>
+                                    <div class="fourteen wide column">
+                                        <input class="cityField" id="city-4" placeholder="Addresse 5" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui middle aligned grid">
+                                    <div class="two wide column cla">
+                                        6
+                                    </div>
+                                    <div class="fourteen wide column">
+                                        <input class="cityField" id="city-5" placeholder="Addresse 6" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui middle aligned grid">
+                                    <div class="two wide column cla">
+                                        7
+                                    </div>
+                                    <div class="fourteen wide column">
+                                        <input class="cityField" id="city-6" placeholder="Addresse 7" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui middle aligned grid">
+                                    <div class="two wide column cla">
+                                        8
+                                    </div>
+                                    <div class="fourteen wide column">
+                                        <input class="cityField" id="city-7" placeholder="Addresse 8" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui middle aligned grid">
+                                    <div class="two wide column cla">
+                                        9
+                                    </div>
+                                    <div class="fourteen wide column">
+                                        <input class="cityField" id="city-8" placeholder="Addresse 9" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui middle aligned grid">
+                                    <div class="two wide column cla">
+                                        10
+                                    </div>
+                                    <div class="fourteen wide column">
+                                        <input class="cityField" id="city-9" placeholder="Addresse 10" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui middle aligned grid">
+                                    <div class="two wide column cla">
+                                        11
+                                    </div>
+                                    <div class="fourteen wide column">
+                                        <input class="cityField" id="city-10" placeholder="Addresse 11" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui middle aligned grid">
+                                    <div class="two wide column cla">
+                                        12
+                                    </div>
+                                    <div class="fourteen wide column">
+                                        <input class="cityField" id="city-11" placeholder="Addresse 12" type="text"
+                                               data-content="Achtung! Das Verwenden von 12 Standorten benötigt bis zu 10 Sekunden Berechnungszeit.">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui middle aligned grid">
+                                    <div class="two wide column cla">
+                                        13
+                                    </div>
+                                    <div class="fourteen wide column">
+                                        <input class="cityField" id="city-12" placeholder="Addresse 13" type="text"
+                                               data-content="Achtung! Das Verwenden von 13 Standorten benötigt bis zu 45 Sekunden Berechnungszeit.">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="item">
+                        <h3 class="ui inverted header">Energieeinstellungen</h3>
+                        <p>Konfigurieren Sie die Energieverbrauchs- und Rekuperationseinstellungen Ihres LKW.</p>
+
+                        <form class="ui inverted form">
+                            <div class="field">
+                                <div class="ui checkbox">
+                                    <input type="checkbox" name="linear-interpolation" id="linear-interpolation"
+                                           data-content="Wenn diese Einstellung aktiviert ist, werden die unten eingegebenen Werte nicht mehr als Grenzwerte behandelt, ab denen die Einsparung bzw. der Mehrverbrauch erfolgt, sondern sind nur Anhaltspunkt für eine lineare Interpolation. Gibt man beispielsweise ein, dass bei 10% Gefälle 20% Energie eingespart wird, so werden dann bei 5% Gefälle immer noch 10% Energie eingespart. Ist diese Einstellung deaktiviert, so betrüge die Einsparung immer 20%, sobald das Gefälle größer oder gleich 10% ist.">
+                                    <label>Zusatzverbrauch und Rekuperation linear interpolieren</label>
+                                </div>
+                            </div>
+
+                            <h4 class="ui inverted dividing header">Energieverbrauch</h4>
+                            <div class="field">
+                                <label>Grundenergieverbrauch in kWh/km</label>
+                                <input id="consumption-level" class="energy-field" placeholder="100" value="100"
+                                       type="number">
+                            </div>
+                            <div class="two fields">
+                                <div class="field">
+                                    <label>Steigung in %</label>
+                                    <input id="consumption-threshold" class="energy-field" placeholder="3" value="3"
+                                           type="number">
+                                </div>
+                                <div class="field">
+                                    <label>Zusatzverbrauch in %</label>
+                                    <input id="consumption-extra" class="energy-field" placeholder="20" value="20"
+                                           type="number">
+                                </div>
+                            </div>
+                        </form>
+
+                        <form class="ui inverted form">
+                            <h4 class="ui inverted dividing header">Rekuperation</h4>
+                            <div class="two fields">
+                                <div class="field">
+                                    <label>Gefälle in %</label>
+                                    <input id="recuperation-threshold" class="energy-field" placeholder="3" value="3"
+                                           type="number">
+                                </div>
+                                <div class="field">
+                                    <label>Einsparung in %</label>
+                                    <input id="recuperation-extra" class="energy-field" placeholder="10" value="10"
+                                           type="number">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div id="sidebar-footer" class="item">
+                    <div class="arrow bounce"></div>
+                    <div class="fluid positive ui button" data-_extension-text-contrast="" id="calcButton">Berechnen
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="map">
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="ui basic modal" id="failedModal">
+    <div class="ui icon header">
+        <i class="exclamation circle icon"></i> Anfrage fehlgeschlagen
+    </div>
+    <div class="content">
+        <p class="pCenter">Die Geocoding-Anfrage ist fehlgeschlagen; bitte versuchen Sie erneut, das Feld zu
+            befüllen.</p>
+    </div>
+    <div class="actions" id="failedModalActions">
+        <div class="ui green ok inverted button" id="closeFailedModal">
+            OK
+        </div>
+    </div>
+</div>
+
+<div class="ui dimmer" id="progessModal">
+    <div id="innerProgress">
+        <h2 class="ui inverted header" id="loading-icon"><i class="truck icon"></i></h2>
+        <h2 class="ui inverted header" id="loading-header">Working ...</h2>
+        <div class="ui inverted indicating progress" id="bar">
+            <div class="bar">
+                <div class="progress"></div>
+            </div>
+        </div>
+        <div class="ui primary button" id="loading-ok-button">OK</div>
+    </div>
+</div>
+
+<
+<!--  AIzaSyAlkDDlu_EeeReIDJgRe6Y0B8wbbxMHWTo -->
+
+<script src="js/main.js"></script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlkDDlu_EeeReIDJgRe6Y0B8wbbxMHWTo&callback=initMap">
+</script>
+</body>
+</html>
