@@ -4,15 +4,15 @@ A TSP Solver using energy consumption of an electric vehicle as distance values.
 # Set Up
 1. Clone this repository
 ```
- git clone https://github.com/coaxial1/tsp-web
-cd tsp-web 
+$ git clone https://github.com/coaxial1/tsp-web
+$ cd tsp-web 
 ```
 2. Run
 ``` 
-java -jar target/tsp-web-0.0.1-SNAPSHOT.jar 
+$ java -jar target/tsp-web-0.0.1-SNAPSHOT.jar 
 ```
 3. Open up your browser and navigate to `http://localhost:8080`
 
-#License
+# License
 Please see license file.
 
